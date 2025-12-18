@@ -18,11 +18,27 @@ export default defineConfig({
   vite: { 
     plugins: [tailwindcss()],
     build: {
-      cssCodeSplit: true,
+      cssCodeSplit: false,
       rollupOptions: {
         output: {
-          manualChunks: {
-            vendor: ['react', 'react-dom'],
+          manualChunks: (id) => {
+            // Bundle critical dependencies together
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom')) {
+                return 'vendor';
+              }
+              if (id.includes('astro-swiper') || id.includes('swiper')) {
+                return 'swiper';
+              }
+              if (id.includes('marked')) {
+                return 'marked';
+              }
+              return 'vendor';
+            }
+            // Bundle small utility modules together
+            if (id.includes('textConverter') || id.includes('config.json')) {
+              return 'utils';
+            }
           }
         }
       }

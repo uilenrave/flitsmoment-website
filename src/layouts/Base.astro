@@ -186,6 +186,14 @@ const { title, meta_title, description, image, noindex, canonical } =
     />
     <meta name="twitter:card" content="summary_large_image" />
     
+    <!-- Preload critical JavaScript chunks to reduce dependency chain -->
+    <link rel="modulepreload" href="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CE65awnE.js">
+    <link rel="modulepreload" href="/_astro/utils.BvcOnKdX.js">
+    
+    <!-- Preload less critical but potentially needed chunks -->
+    <link rel="prefetch" href="/_astro/marked.C0Rlrcoy.js">
+    <link rel="prefetch" href="/_astro/Swiper.astro_astro_type_script_index_0_lang.BXl07GJ1.js">
+    
     <!-- Service Worker for caching optimization -->
     <script>
       if ('serviceWorker' in navigator) {
@@ -210,9 +218,9 @@ const { title, meta_title, description, image, noindex, canonical } =
     }
 
     <TwSizeIndicator />
-    <Announcement client:load />
+    <Announcement client:idle />
     <Header />
-    <SearchModal client:load />
+    <SearchModal client:idle />
     <main id="main-content">
       <slot />
     </main>
