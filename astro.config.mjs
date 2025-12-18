@@ -22,17 +22,21 @@ export default defineConfig({
       rollupOptions: {
         output: {
           manualChunks: (id) => {
-            // Bundle critical dependencies together
+            // Separate large libraries
             if (id.includes('node_modules')) {
               if (id.includes('react') || id.includes('react-dom')) {
-                return 'vendor';
+                return 'react-vendor';
               }
-              if (id.includes('astro-swiper') || id.includes('swiper')) {
-                return 'swiper';
+              if (id.includes('swiper')) {
+                return 'swiper-vendor'; // This will be lazy loaded
               }
               if (id.includes('marked')) {
-                return 'marked';
+                return 'marked-vendor';
               }
+              if (id.includes('disqus') || id.includes('lite-youtube')) {
+                return 'widgets';
+              }
+              // Keep other small dependencies together
               return 'vendor';
             }
             // Bundle small utility modules together

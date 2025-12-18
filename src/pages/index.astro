@@ -4,7 +4,7 @@ import Base from "@/layouts/Base.astro";
 import { getListPage } from "@/lib/contentParser.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import CallToAction from "@/partials/CallToAction.astro";
-import Testimonial from "@/partials/Testimonial.astro";
+import TestimonialSwiper from "@/components/TestimonialSwiper.astro";
 import { FaCheck } from "react-icons/fa";
 
 const homepage = await getListPage("homepage", "-index");
@@ -99,6 +99,6 @@ const { banner, features } = homepage.data;
   }
   <!-- /Features -->
 
-  <Testimonial testimonial={testimonial} />
+  <TestimonialSwiper testimonial={testimonial} />
   <CallToAction call_to_action={call_to_action} />
 </Base>
