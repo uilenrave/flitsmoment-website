@@ -7,8 +7,8 @@
   "packageManager": "yarn@1.22.22",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"node scripts/themeGenerator.js --watch\" \"yarn generate-json && astro dev\"",
-    "build": "node scripts/themeGenerator.js && yarn generate-json && astro build",
+    "dev": "concurrently \"node scripts/themeGenerator.js --watch\" \"npm run generate-json && astro dev\"",
+    "build": "node scripts/themeGenerator.js && npm run generate-json && astro build",
     "preview": "astro preview",
     "check": "astro check",
     "format": "prettier -w ./src",
