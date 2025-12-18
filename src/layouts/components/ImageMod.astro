@@ -13,10 +13,24 @@ interface Props {
   format?: "auto" | "avif" | "jpeg" | "png" | "svg" | "webp";
   class?: string;
   style?: any;
+  widths?: number[]; // Optional: custom responsive widths
+  sizes?: string; // Optional: custom sizes attribute
 }
 
 // Destructuring Astro.props to get the component's props
-let { src, alt, width, height, loading, decoding, class: className, format, style } = Astro.props;
+let { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  loading = "lazy", 
+  decoding = "async", 
+  class: className, 
+  format = "webp",
+  style,
+  widths,
+  sizes
+} = Astro.props;
 
 src = `/public${src}`;
 
@@ -29,6 +43,14 @@ const isValidPath = images[src] ? true : false;
 // Log a warning message in red if the image is not found
 !isValidPath &&
   console.error(`\x1b[31mImage not found - ${src}.\x1b[0m Make sure the image is in the /public/images folder.`);
+
+// Default responsive widths if not provided
+const defaultWidths = [320, 640, 768, 1024, 1280, 1536];
+const responsiveWidths = widths || defaultWidths.filter(w => w <= width);
+
+// Default sizes attribute for responsive images
+const defaultSizes = "(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px";
+const imageSizes = sizes || defaultSizes;
 ---
 
 {
@@ -38,6 +60,8 @@ const isValidPath = images[src] ? true : false;
       alt={alt}
       width={width}
       height={height}
+      widths={responsiveWidths}
+      sizes={imageSizes}
       loading={loading}
       decoding={decoding}
       class={className}
