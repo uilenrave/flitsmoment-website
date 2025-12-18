@@ -15,6 +15,7 @@ interface Props {
   style?: any;
   widths?: number[]; // Optional: custom responsive widths
   sizes?: string; // Optional: custom sizes attribute
+  fetchpriority?: "high" | "low" | "auto"; // Optional: fetch priority for LCP optimization
 }
 
 // Destructuring Astro.props to get the component's props
@@ -29,7 +30,8 @@ let {
   format = "webp",
   style,
   widths,
-  sizes
+  sizes,
+  fetchpriority = "auto"
 } = Astro.props;
 
 src = `/public${src}`;
@@ -67,6 +69,7 @@ const imageSizes = sizes || defaultSizes;
       class={className}
       format={format}
       style={style}
+      fetchpriority={fetchpriority}
     />
   )
 }
